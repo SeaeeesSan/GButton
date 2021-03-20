@@ -14,8 +14,8 @@ namespace Seaeees.GUGUI.Tween
             while (timer <= interval) {
                 if (interval == 0) break;
                 obj.sizeDelta = new Vector2(Ease.LerpWhithEase (pos.x, to.x, timer / interval,ease),Ease.LerpWhithEase (pos.y, to.y, timer / interval,ease));      
-                timer += Time.deltaTime;
-                yield return 0;
+                timer += Time.unscaledDeltaTime;
+                yield return null;
             }
             obj.sizeDelta = to;
         }
@@ -30,8 +30,8 @@ namespace Seaeees.GUGUI.Tween
                 if (interval == 0) break;
                 //TODO:カラーのイージング
                 obj.color = Color.Lerp(col, to, timer / interval);      
-                timer += Time.deltaTime;
-                yield return 0;
+                timer += Time.unscaledDeltaTime;
+                yield return null;
             }
             obj.color = to;
         }
@@ -45,8 +45,8 @@ namespace Seaeees.GUGUI.Tween
             {
                 if (interval == 0) break;
                 obj.fillAmount = Ease.LerpWhithEase(fill, to, timer / interval,ease);      
-                timer += Time.deltaTime;
-                yield return 0;
+                timer += Time.unscaledDeltaTime;
+                yield return null;
             }
             obj.fillAmount = to;
         }
