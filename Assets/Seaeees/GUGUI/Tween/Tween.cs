@@ -13,7 +13,7 @@ namespace Seaeees.GUGUI.Tween
             float timer = 0;
             while (timer <= interval) {
                 if (interval == 0) break;
-                obj.sizeDelta = new Vector2(Ease.LerpWhithEase (pos.x, to.x, timer / interval,ease),Ease.LerpWhithEase (pos.y, to.y, timer / interval,ease));      
+                obj.sizeDelta = new Vector2(Ease.LerpWithEase (pos.x, to.x, timer / interval,ease),Ease.LerpWithEase (pos.y, to.y, timer / interval,ease));      
                 timer += Time.unscaledDeltaTime;
                 yield return null;
             }
@@ -44,7 +44,7 @@ namespace Seaeees.GUGUI.Tween
             while (timer <= interval)
             {
                 if (interval == 0) break;
-                obj.fillAmount = Ease.LerpWhithEase(fill, to, timer / interval,ease);      
+                obj.fillAmount = Ease.LerpWithEase(fill, to, timer / interval,ease);      
                 timer += Time.unscaledDeltaTime;
                 yield return null;
             }
