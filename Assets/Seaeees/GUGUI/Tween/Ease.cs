@@ -2,38 +2,49 @@ using System;
 
 namespace Seaeees.GUGUI.Tween
 {
-    public delegate float Easing(float a,float b,float t);
     public static class Ease
     {
         public static float LerpWithEase(float a, float b, float t, EaseType ease)
         {
-            return GetEase(ease)(a,b,t);
+            switch (ease)
+            {
+                case EaseType.Linear:
+                    return Linear(a, b, t);
+                case EaseType.QuadIn:
+                    return QuadIn(a, b, t);
+                case EaseType.QuadOut:
+                    return QuadOut(a, b, t);
+                case EaseType.QuadInOut:
+                    return QuadInOut(a, b, t);
+                case EaseType.CubicIn:
+                    return CubicIn(a, b, t);
+                case EaseType.CubicOut:
+                    return CubicOut(a, b, t);
+                case EaseType.CubicInOut:
+                    return CubicInOut(a, b, t);
+                case EaseType.QuartIn:
+                    return QuartIn(a, b, t);
+                case EaseType.QuartOut:
+                    return QuartOut(a, b, t);
+                case EaseType.QuartInOut:
+                    return QuartInOut(a, b, t);
+                case EaseType.QuintIn:
+                    return QuintIn(a, b, t);
+                case EaseType.QuintOut:
+                    return QuintOut(a, b, t);
+                case EaseType.QuintInOut:
+                    return QuintInOut(a, b, t);
+                case EaseType.ExpoIn:
+                    return ExpoIn(a, b, t);
+                case EaseType.ExpoOut:
+                    return ExpoOut(a, b, t);
+                case EaseType.ExpoInOut:
+                    return ExpoInOut(a, b, t);
+                default:
+                    return Linear(a, b, t);
+            }
         }
 
-        private static Easing GetEase(EaseType type)
-        {
-            return type switch
-            {
-                EaseType.Linear => Linear,
-                EaseType.QuadIn => QuadIn,
-                EaseType.QuadOut => QuadOut,
-                EaseType.QuadInOut => QuadInOut,
-                EaseType.CubicIn => CubicIn,
-                EaseType.CubicOut => CubicOut,
-                EaseType.CubicInOut => CubicInOut,
-                EaseType.QuartIn => QuartIn,
-                EaseType.QuartOut => QuartOut,
-                EaseType.QuartInOut => QuartInOut,
-                EaseType.QuintIn => QuintIn,
-                EaseType.QuintOut => QuintOut,
-                EaseType.QuintInOut => QuintInOut,
-                EaseType.ExpoIn => ExpoIn,
-                EaseType.ExpoOut => ExpoOut,
-                EaseType.ExpoInOut => ExpoInOut,
-                _ => Linear
-            };
-        }
-        
         private static float Linear(float a, float b,float t)
         {
             b -= a;
