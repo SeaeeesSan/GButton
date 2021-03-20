@@ -5,7 +5,7 @@ namespace Seaeees.GUGUI.Tween
     public delegate float Easing(float a,float b,float t);
     public static class Ease
     {
-        public static float LerpWhithEase(float a, float b, float t, EaseType ease)
+        public static float LerpWithEase(float a, float b, float t, EaseType ease)
         {
             return GetEase(ease)(a,b,t);
         }
