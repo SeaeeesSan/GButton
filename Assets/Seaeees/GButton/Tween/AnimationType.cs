@@ -1,4 +1,4 @@
-namespace Seaeees.GUGUI
+namespace Seaeees.GButton.Tween
 {
     internal enum AnimationType
     {

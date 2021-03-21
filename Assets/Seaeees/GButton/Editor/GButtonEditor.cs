@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Seaeees.GUGUI.Editor
+namespace Seaeees.GButton.Editor
 {
     [CustomEditor(typeof(GButton))]
     public class GButtonEditor : UnityEditor.Editor

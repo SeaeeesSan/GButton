@@ -62,7 +62,7 @@ namespace Seaeees.GButton.Editor
 
             Selection.activeGameObject = element;
 
-            element.AddComponent<GUGUI.GButton>();
+            element.AddComponent<GButton>();
 
             element.GetComponent<Button>().transition = Selectable.Transition.None;
         }

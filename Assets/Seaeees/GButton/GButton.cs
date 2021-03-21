@@ -1,10 +1,10 @@
 using System.Collections;
+using Seaeees.GButton.Tween;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using Seaeees.GUGUI.Tween;
+using UnityEngine.UI;
 
-namespace Seaeees.GUGUI
+namespace Seaeees.GButton
 {
     public class GButton : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     {

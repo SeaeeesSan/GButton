@@ -1,4 +1,4 @@
-namespace Seaeees.GUGUI.Tween
+namespace Seaeees.GButton.Tween
 {
     public enum EaseType
     {

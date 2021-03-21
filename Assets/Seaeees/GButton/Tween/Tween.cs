@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Seaeees.GUGUI.Tween
+namespace Seaeees.GButton.Tween
 {
     public static class Tween
     {
