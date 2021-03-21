@@ -80,12 +80,13 @@ namespace Seaeees.GUGUI.Editor
         {
             serializedObject.Update();
 
-            EditorGUILayout.BeginHorizontal();
-            _useTemplate = EditorGUILayout.Toggle("UseTemplate", _useTemplate);
-            EditorGUI.BeginDisabledGroup(!_useTemplate);
+            //EditorGUILayout.BeginHorizontal();
+            //_useTemplate = EditorGUILayout.Toggle("UseTemplate", _useTemplate);
+            //EditorGUI.BeginDisabledGroup(!_useTemplate);
             //EditorGUILayout.PropertyField(_template, new GUIContent(""));
-            EditorGUI.EndDisabledGroup();
-            EditorGUILayout.EndHorizontal();
+            //EditorGUI.EndDisabledGroup();
+            //EditorGUILayout.EndHorizontal();
+            _useTemplate = false;
             EditorGUI.BeginDisabledGroup(_useTemplate);
             _tabIndex = GUILayout.Toolbar(_tabIndex, new[] {"Color", "Scale", "Audio", "Sprite", "Others"});
             switch (_tabIndex)
