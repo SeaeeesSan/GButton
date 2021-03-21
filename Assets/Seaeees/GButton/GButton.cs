@@ -63,7 +63,8 @@ namespace Seaeees.GButton
 
         private void OnValidate() => CalculateScale();
 
-        private void CalculateScale() {
+        private void CalculateScale()
+        {
             _calculatedScaleOnHover = new Vector2(_defaultScale.x + scaleOnHover.x, _defaultScale.y + scaleOnHover.y);
             _calculatedScaleOnClick = new Vector2(_defaultScale.x + scaleOnClick.x, _defaultScale.y + scaleOnClick.y);
         }
