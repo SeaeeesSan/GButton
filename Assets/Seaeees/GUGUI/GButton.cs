@@ -29,14 +29,14 @@ namespace Seaeees.GUGUI
         [SerializeField] private bool useImageChangerOnHover;
         [SerializeField] private bool useImageChangerOnClick;
         [SerializeField] private EaseType scaleEaseType = EaseType.Linear;
-        [SerializeField] private Vector2 scaleOnHover;
-        [SerializeField] private float scaleDurationOnHover = 0.1f;
-        [SerializeField] private Vector2 scaleOnClick;
-        [SerializeField] private float scaleDurationOnClick = 0.1f;
+        [SerializeField] private Vector2 scaleOnHover = Vector2.zero;
+        [SerializeField] private float scaleDurationOnHover = 0.3f;
+        [SerializeField] private Vector2 scaleOnClick = Vector2.zero;
+        [SerializeField] private float scaleDurationOnClick;
         [SerializeField] private Color colorOnHover = Color.gray;
-        [SerializeField] private float colorDurationOnHover = 0.1f;
+        [SerializeField] private float colorDurationOnHover = 0.3f;
         [SerializeField] private Color colorOnClick = Color.gray;
-        [SerializeField] private float colorDurationOnClick = 0.1f;
+        [SerializeField] private float colorDurationOnClick;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip hoverEnterAudioClip;
         [SerializeField] private AudioClip hoverExitAudioClip;
@@ -44,7 +44,7 @@ namespace Seaeees.GUGUI
         [SerializeField] private AudioClip upAudioClip;
         [SerializeField] private EaseType fillImageEaseType = EaseType.Linear;
         [SerializeField] private Image fillImage;
-        [SerializeField] private float fillImageDuration = 0.1f;
+        [SerializeField] private float fillImageDuration = 0.3f;
         [SerializeField] private Sprite hoverImage;
         [SerializeField] private Sprite clickImage;
 
