@@ -17,7 +17,7 @@ Animation Type:
 Unity2019.4 or later
 
 ## Download
-https://github.com/SeaeeesSan/GButton/releases/tag/1.0.1
+https://github.com/SeaeeesSan/GButton/releases
 
 ## License
 MIT License
