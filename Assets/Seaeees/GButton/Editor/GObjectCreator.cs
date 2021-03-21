@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEditor.Experimental.SceneManagement;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -30,9 +31,11 @@ namespace Seaeees.GButton.Editor
         {
             GameObject element = DefaultControls.CreateButton(GetResource());
             var parent = menuCommand.context as GameObject;
+            bool explicitParentChoice = true;
             if (parent == null)
             {
                 parent = GetOrCreateCanvasGameObject();
+                explicitParentChoice = false;
 
                 PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
                 if (prefabStage != null && !prefabStage.IsPartOfPrefabContents(parent))
@@ -59,12 +62,54 @@ namespace Seaeees.GButton.Editor
             Undo.SetCurrentGroupName("Create " + element.name);
 
             GameObjectUtility.SetParentAndAlign(element, parent);
+            if (!explicitParentChoice)
+                SetPositionVisibleinSceneView(parent.GetComponent<RectTransform>(), element.GetComponent<RectTransform>());
 
             Selection.activeGameObject = element;
 
             element.AddComponent<GButton>();
 
             element.GetComponent<Button>().transition = Selectable.Transition.None;
+        }
+        
+        private static void SetPositionVisibleinSceneView(RectTransform canvasRTransform, RectTransform itemTransform)
+        {
+            SceneView sceneView = SceneView.lastActiveSceneView;
+
+            if (sceneView == null || sceneView.camera == null)
+                return;
+
+            Vector2 localPlanePosition;
+            Camera camera = sceneView.camera;
+            Vector3 position = Vector3.zero;
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRTransform, new Vector2(camera.pixelWidth / 2, camera.pixelHeight / 2), camera, out localPlanePosition))
+            {
+                // Adjust for canvas pivot
+                localPlanePosition.x = localPlanePosition.x + canvasRTransform.sizeDelta.x * canvasRTransform.pivot.x;
+                localPlanePosition.y = localPlanePosition.y + canvasRTransform.sizeDelta.y * canvasRTransform.pivot.y;
+
+                localPlanePosition.x = Mathf.Clamp(localPlanePosition.x, 0, canvasRTransform.sizeDelta.x);
+                localPlanePosition.y = Mathf.Clamp(localPlanePosition.y, 0, canvasRTransform.sizeDelta.y);
+
+                // Adjust for anchoring
+                position.x = localPlanePosition.x - canvasRTransform.sizeDelta.x * itemTransform.anchorMin.x;
+                position.y = localPlanePosition.y - canvasRTransform.sizeDelta.y * itemTransform.anchorMin.y;
+
+                Vector3 minLocalPosition;
+                minLocalPosition.x = canvasRTransform.sizeDelta.x * (0 - canvasRTransform.pivot.x) + itemTransform.sizeDelta.x * itemTransform.pivot.x;
+                minLocalPosition.y = canvasRTransform.sizeDelta.y * (0 - canvasRTransform.pivot.y) + itemTransform.sizeDelta.y * itemTransform.pivot.y;
+
+                Vector3 maxLocalPosition;
+                maxLocalPosition.x = canvasRTransform.sizeDelta.x * (1 - canvasRTransform.pivot.x) - itemTransform.sizeDelta.x * itemTransform.pivot.x;
+                maxLocalPosition.y = canvasRTransform.sizeDelta.y * (1 - canvasRTransform.pivot.y) - itemTransform.sizeDelta.y * itemTransform.pivot.y;
+
+                position.x = Mathf.Clamp(position.x, minLocalPosition.x, maxLocalPosition.x);
+                position.y = Mathf.Clamp(position.y, minLocalPosition.y, maxLocalPosition.y);
+            }
+
+            itemTransform.anchoredPosition = position;
+            itemTransform.localRotation = Quaternion.identity;
+            itemTransform.localScale = Vector3.one;
         }
         
         static public GameObject CreateNewUI()
@@ -76,9 +121,48 @@ namespace Seaeees.GButton.Editor
             root.AddComponent<CanvasScaler>();
             root.AddComponent<GraphicRaycaster>();
 
+            StageUtility.PlaceGameObjectInCurrentStage(root);
+            bool customScene = false;
+            PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+            if (prefabStage != null)
+            {
+                root.transform.SetParent(prefabStage.prefabContentsRoot.transform, false);
+                customScene = true;
+            }
+
             Undo.RegisterCreatedObjectUndo(root, "Create " + root.name);
 
+            if (!customScene)
+                CreateEventSystem(false);
             return root;
+        }
+
+        private static void CreateEventSystem(bool select)
+        {
+            CreateEventSystem(select, null);
+        }
+
+        private static void CreateEventSystem(bool select, GameObject parent)
+        {
+            StageHandle stage = parent == null ? StageUtility.GetCurrentStageHandle() : StageUtility.GetStageHandle(parent);
+            var esys = stage.FindComponentOfType<EventSystem>();
+            if (esys == null)
+            {
+                var eventSystem = new GameObject("EventSystem");
+                if (parent == null)
+                    StageUtility.PlaceGameObjectInCurrentStage(eventSystem);
+                else
+                    GameObjectUtility.SetParentAndAlign(eventSystem, parent);
+                esys = eventSystem.AddComponent<EventSystem>();
+                eventSystem.AddComponent<StandaloneInputModule>();
+
+                Undo.RegisterCreatedObjectUndo(eventSystem, "Create " + eventSystem.name);
+            }
+
+            if (select && esys != null)
+            {
+                Selection.activeGameObject = esys.gameObject;
+            }
         }
 
         private static GameObject GetOrCreateCanvasGameObject()
