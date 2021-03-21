@@ -52,12 +52,18 @@ namespace Seaeees.GButton
         {
             _rectTransform = GetComponent<RectTransform>();
             _image = GetComponent<Image>();
-            
+
             _fillImage = fillImage;
             _defaultScale = _rectTransform.sizeDelta;
             _defaultColor = _image.color;
             _defaultSprite = _image.sprite;
-            
+
+            CalculateScale();
+        }
+
+        private void OnValidate() => CalculateScale();
+
+        private void CalculateScale() {
             _calculatedScaleOnHover = new Vector2(_defaultScale.x + scaleOnHover.x, _defaultScale.y + scaleOnHover.y);
             _calculatedScaleOnClick = new Vector2(_defaultScale.x + scaleOnClick.x, _defaultScale.y + scaleOnClick.y);
         }
