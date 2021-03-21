@@ -100,12 +100,14 @@ namespace Seaeees.GUGUI.Tween
         
         private static float QuartIn(float a, float b,float t)
         {
+            b -= a;
             t /= 1;
             return b*t*t*t*t + a;
         }
         
         private static float QuartOut(float a, float b,float t)
         {
+            b -= a;
             t /= 1;
             t--;
             return -b * (t*t*t*t - 1) + a;
@@ -122,12 +124,14 @@ namespace Seaeees.GUGUI.Tween
         
         private static float QuintIn(float a, float b,float t)
         {
+            b -= a;
             t /= 1;
             return b*t*t*t*t*t + a;
         }
         
         private static float QuintOut(float a, float b,float t)
         {
+            b -= a;
             t /= 1;
             t--;
             return b*(t*t*t*t*t + 1) + a;
