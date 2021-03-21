@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Seaeees.GUGUI.Editor
 {
-    [CustomEditor(typeof(GButton))]
-    public class GButtonEditor : UnityEditor.Editor
+    [CustomEditor(typeof(GButtonTemplate))]
+    public class GButtonEditorTemplate : UnityEditor.Editor
     {
         private int _tabIndex;
         private bool _useTemplate;
@@ -14,12 +14,8 @@ namespace Seaeees.GUGUI.Editor
         private SerializedProperty _useColorAnimationOnHover;
         private SerializedProperty _useColorAnimationOnClick;
         private SerializedProperty _useAudioPlayer;
-        private SerializedProperty _useFillAmountAnimation;
         private SerializedProperty _useImageChangerOnHover;
         private SerializedProperty _useImageChangerOnClick;
-
-        //TODO:テンプレート
-        //private SerializedProperty _template;
 
         private SerializedProperty _scaleEaseType;
         private SerializedProperty _scaleOnHover;
@@ -38,9 +34,6 @@ namespace Seaeees.GUGUI.Editor
         private SerializedProperty _downAudioClip;
         private SerializedProperty _upAudioClip;
 
-        private SerializedProperty _fillImageEaseType;
-        private SerializedProperty _fillImage;
-        private SerializedProperty _fillImageDuration;
         private SerializedProperty _hoverImage;
         private SerializedProperty _clickImage;
 
@@ -51,7 +44,6 @@ namespace Seaeees.GUGUI.Editor
             _useColorAnimationOnHover = serializedObject.FindProperty("useColorAnimationOnHover");
             _useColorAnimationOnClick = serializedObject.FindProperty("useColorAnimationOnClick");
             _useAudioPlayer = serializedObject.FindProperty("useAudioPlayer");
-            _useFillAmountAnimation = serializedObject.FindProperty("useFillAmountAnimation");
             _useImageChangerOnHover = serializedObject.FindProperty("useImageChangerOnHover");
             _useImageChangerOnClick = serializedObject.FindProperty("useImageChangerOnClick");
             _scaleEaseType = serializedObject.FindProperty("scaleEaseType");
@@ -68,9 +60,6 @@ namespace Seaeees.GUGUI.Editor
             _hoverExitAudioClip = serializedObject.FindProperty("hoverExitAudioClip");
             _downAudioClip = serializedObject.FindProperty("downAudioClip");
             _upAudioClip = serializedObject.FindProperty("upAudioClip");
-            _fillImageEaseType = serializedObject.FindProperty("fillImageEaseType");
-            _fillImage = serializedObject.FindProperty("fillImage");
-            _fillImageDuration = serializedObject.FindProperty("fillImageDuration");
             _hoverImage = serializedObject.FindProperty("hoverImage");
             _clickImage = serializedObject.FindProperty("clickImage");
         }
@@ -81,7 +70,7 @@ namespace Seaeees.GUGUI.Editor
             
             _useTemplate = false;
             EditorGUI.BeginDisabledGroup(_useTemplate);
-            _tabIndex = GUILayout.Toolbar(_tabIndex, new[] {"Color", "Scale", "Audio", "Sprite", "Others"});
+            _tabIndex = GUILayout.Toolbar(_tabIndex, new[] {"Color", "Scale", "Audio", "Sprite"});
             switch (_tabIndex)
             {
                 case 0:
@@ -163,20 +152,6 @@ namespace Seaeees.GUGUI.Editor
                         EditorGUI.indentLevel++;
                         EditorGUILayout.BeginVertical(GUI.skin.box);
                         EditorGUILayout.PropertyField(_clickImage);
-                        EditorGUILayout.EndVertical();
-                        EditorGUI.indentLevel--;
-                    }
-                    break;
-                case 4:
-                    EditorGUILayout.PropertyField(
-                        _useFillAmountAnimation);
-                    if (_useFillAmountAnimation.boolValue)
-                    {
-                        EditorGUI.indentLevel++;
-                        EditorGUILayout.BeginVertical(GUI.skin.box);
-                        EditorGUILayout.PropertyField(_fillImageEaseType);
-                        EditorGUILayout.PropertyField(_fillImage);
-                        EditorGUILayout.PropertyField(_fillImageDuration);
                         EditorGUILayout.EndVertical();
                         EditorGUI.indentLevel--;
                     }
