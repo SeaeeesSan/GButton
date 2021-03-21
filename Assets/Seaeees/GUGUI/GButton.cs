@@ -77,9 +77,6 @@ namespace Seaeees.GUGUI
             AnimationScale(type);
             AnimationColor(type);
             ImageChange(type);
-            
-            //TODO:クリック後の動作
-            if(type == AnimationType.PointerUp) PlayButtonEffects(AnimationType.PointerEnter);
         }
         
         private void PlayAudio(AnimationType animationType)
@@ -114,6 +111,8 @@ namespace Seaeees.GUGUI
                 ResetCoroutine(ref _scaleAnimationCoroutine, _rectTransform.AnimateScale(_defaultScale, scaleDurationOnHover, scaleEaseType));
             else if (animationType == AnimationType.PointerDown && useScaleAnimationOnClick)
                 ResetCoroutine(ref _scaleAnimationCoroutine, _rectTransform.AnimateScale(_calculatedScaleOnClick, scaleDurationOnClick, scaleEaseType));
+            else if (animationType == AnimationType.PointerUp && useScaleAnimationOnClick && useScaleAnimationOnHover)
+                ResetCoroutine(ref _scaleAnimationCoroutine, _rectTransform.AnimateScale(_calculatedScaleOnHover, scaleDurationOnClick, scaleEaseType));
             else if (animationType == AnimationType.PointerUp && useScaleAnimationOnClick)
                 ResetCoroutine(ref _scaleAnimationCoroutine, _rectTransform.AnimateScale(_defaultScale, scaleDurationOnClick, scaleEaseType));
         }
@@ -126,6 +125,8 @@ namespace Seaeees.GUGUI
                 ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(_defaultColor, colorDurationOnHover));
             else if (animationType == AnimationType.PointerDown && useColorAnimationOnClick)
                 ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(colorOnClick, colorDurationOnClick));
+            else if (animationType == AnimationType.PointerUp && useColorAnimationOnClick && useColorAnimationOnHover)
+                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(colorOnHover, colorDurationOnClick));
             else if (animationType == AnimationType.PointerUp && useColorAnimationOnClick)
                 ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(_defaultColor, colorDurationOnClick));
         }
@@ -138,6 +139,8 @@ namespace Seaeees.GUGUI
                 _image.sprite = _defaultSprite;
             else if (animationType == AnimationType.PointerDown && useImageChangerOnClick)
                 _image.sprite = clickImage;
+            else if (animationType == AnimationType.PointerUp && useImageChangerOnClick && useImageChangerOnHover) 
+                _image.sprite = hoverImage;
             else if (animationType == AnimationType.PointerUp && useImageChangerOnClick) 
                 _image.sprite = _defaultSprite;
         }
