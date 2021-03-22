@@ -190,7 +190,7 @@ namespace Seaeees.GButton.Editor
                     break;
             }
             EditorGUI.EndDisabledGroup();
-            
+
             serializedObject.ApplyModifiedProperties();
         }
     }

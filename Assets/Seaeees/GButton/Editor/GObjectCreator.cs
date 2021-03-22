@@ -11,9 +11,9 @@ namespace Seaeees.GButton.Editor
     static class GObjectCreator
     {
         private static DefaultControls.Resources _uiResource;
-    
+
         private const string SpritePath = "UI/Skin/UISprite.psd";
-        
+
         private static DefaultControls.Resources GetResource()
         {
             if (_uiResource.standard == null)
@@ -23,9 +23,9 @@ namespace Seaeees.GButton.Editor
             return _uiResource;
         }
 
-        
+
         //Licensed under the Unity Companion License for Unity-dependent projects--see Unity Companion License.
-        //© 2014 - 2018 Unity Technologies ApS 
+        //© 2014 - 2018 Unity Technologies ApS
         [MenuItem("GameObject/UI/GButton", false, 0)]
         private static void CreateGButton(MenuCommand menuCommand)
         {
@@ -71,7 +71,7 @@ namespace Seaeees.GButton.Editor
 
             element.GetComponent<Button>().transition = Selectable.Transition.None;
         }
-        
+
         private static void SetPositionVisibleinSceneView(RectTransform canvasRTransform, RectTransform itemTransform)
         {
             SceneView sceneView = SceneView.lastActiveSceneView;
@@ -111,7 +111,7 @@ namespace Seaeees.GButton.Editor
             itemTransform.localRotation = Quaternion.identity;
             itemTransform.localScale = Vector3.one;
         }
-        
+
         static public GameObject CreateNewUI()
         {
             var root = new GameObject("Canvas");
@@ -180,7 +180,7 @@ namespace Seaeees.GButton.Editor
 
             return CreateNewUI();
         }
-        
+
         static bool IsValidCanvas(Canvas canvas)
         {
             if (canvas == null || !canvas.gameObject.activeInHierarchy)

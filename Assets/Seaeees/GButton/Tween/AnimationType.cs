@@ -5,6 +5,6 @@ namespace Seaeees.GButton.Tween
         PointerEnter,
         PointerExit,
         PointerDown,
-        PointerUp,
+        PointerUp
     }
 }

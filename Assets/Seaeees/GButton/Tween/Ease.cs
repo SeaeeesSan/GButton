@@ -50,21 +50,21 @@ namespace Seaeees.GButton.Tween
             t /= 1;
             return b * t + a;
         }
-        
+
         private static float QuadIn(float a, float b,float t)
         {
             b -= a;
             t /= 1;
             return b * t * t + a;
         }
-        
+
         private static float QuadOut(float a, float b,float t)
         {
             b -= a;
             t /= 1;
             return -b * t*(t-2) + a;
         }
-        
+
         private static float QuadInOut(float a, float b,float t)
         {
             b -= a;
@@ -79,7 +79,7 @@ namespace Seaeees.GButton.Tween
             t /= 1;
             return b * t * t * t + a;
         }
-        
+
         private static float CubicOut(float a, float b,float t)
         {
             b -= a;
@@ -87,7 +87,7 @@ namespace Seaeees.GButton.Tween
             t--;
             return b*(t*t*t + 1) + a;
         }
-        
+
         private static float CubicInOut(float a, float b,float t)
         {
             b -= a;
@@ -96,14 +96,14 @@ namespace Seaeees.GButton.Tween
             t -= 2;
             return b / 2 * (t * t * t + 2) + a;
         }
-        
+
         private static float QuartIn(float a, float b,float t)
         {
             b -= a;
             t /= 1;
             return b*t*t*t*t + a;
         }
-        
+
         private static float QuartOut(float a, float b,float t)
         {
             b -= a;
@@ -111,7 +111,7 @@ namespace Seaeees.GButton.Tween
             t--;
             return -b * (t*t*t*t - 1) + a;
         }
-        
+
         private static float QuartInOut(float a, float b,float t)
         {
             b -= a;
@@ -120,14 +120,14 @@ namespace Seaeees.GButton.Tween
             t -= 2;
             return -b/2 * (t*t*t*t - 2) + a;
         }
-        
+
         private static float QuintIn(float a, float b,float t)
         {
             b -= a;
             t /= 1;
             return b*t*t*t*t*t + a;
         }
-        
+
         private static float QuintOut(float a, float b,float t)
         {
             b -= a;
@@ -135,7 +135,7 @@ namespace Seaeees.GButton.Tween
             t--;
             return b*(t*t*t*t*t + 1) + a;
         }
-        
+
         private static float QuintInOut(float a, float b,float t)
         {
             b -= a;
@@ -144,21 +144,21 @@ namespace Seaeees.GButton.Tween
             t -= 2;
             return b/2*(t*t*t*t*t + 2) + a;
         }
-        
+
         private static float ExpoIn(float a, float b,float t)
         {
             b -= a;
             t /= 1;
             return b * (float)Math.Pow( 2, 10 * (t - 1) ) + a;
         }
-        
+
         private static float ExpoOut(float a, float b,float t)
         {
             b -= a;
             t /= 1;
             return b * (float)(-Math.Pow( 2, -10 * t ) + 1 ) + a;
         }
-        
+
         private static float ExpoInOut(float a, float b,float t)
         {
             b -= a;

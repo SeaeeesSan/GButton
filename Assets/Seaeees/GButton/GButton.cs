@@ -76,7 +76,7 @@ namespace Seaeees.GButton
         public void OnPointerDown(PointerEventData eventData) => PlayButtonEffects(AnimationType.PointerDown);
 
         public void OnPointerUp(PointerEventData eventData) => PlayButtonEffects(AnimationType.PointerUp);
-        
+
         private void PlayButtonEffects(AnimationType type)
         {
             PlayAudio(type);
@@ -85,7 +85,7 @@ namespace Seaeees.GButton
             AnimationColor(type);
             ImageChange(type);
         }
-        
+
         private void PlayAudio(AnimationType animationType)
         {
             if (!audioSource) return;
@@ -96,10 +96,10 @@ namespace Seaeees.GButton
                 audioSource.PlayOneShot(hoverExitAudioClip);
             else if (animationType == AnimationType.PointerDown)
                 audioSource.PlayOneShot(downAudioClip);
-            else if (animationType == AnimationType.PointerUp) 
+            else if (animationType == AnimationType.PointerUp)
                 audioSource.PlayOneShot(upAudioClip);
         }
-        
+
         private void AnimationFillAmount(AnimationType animationType)
         {
             if (!_fillImage) return;
@@ -109,7 +109,7 @@ namespace Seaeees.GButton
             else if (animationType == AnimationType.PointerExit)
                 ResetCoroutine(ref _fillAnimationCoroutine, _fillImage.AnimateFillAmount(0, fillImageDuration, fillImageEaseType));
         }
-        
+
         private void AnimationScale(AnimationType animationType)
         {
             if (animationType == AnimationType.PointerEnter && useScaleAnimationOnHover)
@@ -123,7 +123,7 @@ namespace Seaeees.GButton
             else if (animationType == AnimationType.PointerUp && useScaleAnimationOnClick)
                 ResetCoroutine(ref _scaleAnimationCoroutine, _rectTransform.AnimateScale(_defaultScale, scaleDurationOnClick, scaleEaseType));
         }
-        
+
         private void AnimationColor(AnimationType animationType)
         {
             if (animationType == AnimationType.PointerEnter && useColorAnimationOnHover)
@@ -137,7 +137,7 @@ namespace Seaeees.GButton
             else if (animationType == AnimationType.PointerUp && useColorAnimationOnClick)
                 ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(_defaultColor, colorDurationOnClick));
         }
-        
+
         private void ImageChange(AnimationType animationType)
         {
             if (animationType == AnimationType.PointerEnter && useImageChangerOnHover)
@@ -146,12 +146,12 @@ namespace Seaeees.GButton
                 _image.sprite = _defaultSprite;
             else if (animationType == AnimationType.PointerDown && useImageChangerOnClick)
                 _image.sprite = clickImage;
-            else if (animationType == AnimationType.PointerUp && useImageChangerOnClick && useImageChangerOnHover) 
+            else if (animationType == AnimationType.PointerUp && useImageChangerOnClick && useImageChangerOnHover)
                 _image.sprite = hoverImage;
-            else if (animationType == AnimationType.PointerUp && useImageChangerOnClick) 
+            else if (animationType == AnimationType.PointerUp && useImageChangerOnClick)
                 _image.sprite = _defaultSprite;
         }
-        
+
         private void ResetCoroutine(ref Coroutine coroutine, IEnumerator enumerator)
         {
             if (coroutine != null) StopCoroutine(coroutine);
