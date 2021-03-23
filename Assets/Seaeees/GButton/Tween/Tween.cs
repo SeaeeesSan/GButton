@@ -20,7 +20,7 @@ namespace Seaeees.GButton.Tween
             obj.sizeDelta = to;
         }
 
-        public static IEnumerator AnimateColor(this Image obj, Color to, float interval)
+        public static IEnumerator AnimateColor(this Image obj, Color to, float interval, EaseType ease)
         {
             if(!obj) yield break;
             Color col = obj.color;
@@ -28,8 +28,7 @@ namespace Seaeees.GButton.Tween
             while (timer <= interval)
             {
                 if (interval == 0) break;
-                //TODO:カラーのイージング
-                obj.color = Color.Lerp(col, to, timer / interval);
+                obj.color = ColorEase.ColorLerpWithEase(col, to, timer / interval,ease);
                 timer += Time.unscaledDeltaTime;
                 yield return null;
             }

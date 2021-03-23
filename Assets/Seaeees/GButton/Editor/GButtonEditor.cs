@@ -27,6 +27,7 @@ namespace Seaeees.GButton.Editor
         private SerializedProperty _scaleOnClick;
         private SerializedProperty _scaleDurationOnClick;
 
+        private SerializedProperty _colorEaseType;
         private SerializedProperty _colorOnHover;
         private SerializedProperty _colorDurationOnHover;
         private SerializedProperty _colorOnClick;
@@ -54,12 +55,12 @@ namespace Seaeees.GButton.Editor
             _useFillAmountAnimation = serializedObject.FindProperty("useFillAmountAnimation");
             _useImageChangerOnHover = serializedObject.FindProperty("useImageChangerOnHover");
             _useImageChangerOnClick = serializedObject.FindProperty("useImageChangerOnClick");
-            //_template = serializedObject.FindProperty("template");
             _scaleEaseType = serializedObject.FindProperty("scaleEaseType");
             _scaleOnHover = serializedObject.FindProperty("scaleOnHover");
             _scaleDurationOnHover = serializedObject.FindProperty("scaleDurationOnHover");
             _scaleOnClick = serializedObject.FindProperty("scaleOnClick");
             _scaleDurationOnClick = serializedObject.FindProperty("scaleDurationOnClick");
+            _colorEaseType = serializedObject.FindProperty("colorEaseType");
             _colorOnHover = serializedObject.FindProperty("colorOnHover");
             _colorDurationOnHover = serializedObject.FindProperty("colorDurationOnHover");
             _colorOnClick = serializedObject.FindProperty("colorOnClick");
@@ -97,6 +98,7 @@ namespace Seaeees.GButton.Editor
                     {
                         EditorGUI.indentLevel++;
                         EditorGUILayout.BeginVertical(GUI.skin.box);
+                        EditorGUILayout.PropertyField(_colorEaseType);
                         EditorGUILayout.PropertyField(_colorOnHover);
                         EditorGUILayout.PropertyField(_colorDurationOnHover);
                         EditorGUILayout.EndVertical();
