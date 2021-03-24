@@ -24,4 +24,10 @@ namespace Seaeees.GButton.Tween
         ExpoOut,
         ExpoInOut,
     }
+
+    public enum ColorSpaceType
+    {
+        RGB,
+        HSV
+    }
 }

@@ -28,6 +28,7 @@ namespace Seaeees.GButton.Editor
         private SerializedProperty _scaleDurationOnClick;
 
         private SerializedProperty _colorEaseType;
+        private SerializedProperty _colorSpaceType;
         private SerializedProperty _colorOnHover;
         private SerializedProperty _colorDurationOnHover;
         private SerializedProperty _colorOnClick;
@@ -39,7 +40,7 @@ namespace Seaeees.GButton.Editor
         private SerializedProperty _downAudioClip;
         private SerializedProperty _upAudioClip;
 
-        private SerializedProperty _fillImageEaseType;
+        private SerializedProperty _fillAmountEaseType;
         private SerializedProperty _fillImage;
         private SerializedProperty _fillImageDuration;
         private SerializedProperty _hoverImage;
@@ -61,6 +62,7 @@ namespace Seaeees.GButton.Editor
             _scaleOnClick = serializedObject.FindProperty("scaleOnClick");
             _scaleDurationOnClick = serializedObject.FindProperty("scaleDurationOnClick");
             _colorEaseType = serializedObject.FindProperty("colorEaseType");
+            _colorSpaceType = serializedObject.FindProperty("colorSpaceType");
             _colorOnHover = serializedObject.FindProperty("colorOnHover");
             _colorDurationOnHover = serializedObject.FindProperty("colorDurationOnHover");
             _colorOnClick = serializedObject.FindProperty("colorOnClick");
@@ -70,7 +72,7 @@ namespace Seaeees.GButton.Editor
             _hoverExitAudioClip = serializedObject.FindProperty("hoverExitAudioClip");
             _downAudioClip = serializedObject.FindProperty("downAudioClip");
             _upAudioClip = serializedObject.FindProperty("upAudioClip");
-            _fillImageEaseType = serializedObject.FindProperty("fillImageEaseType");
+            _fillAmountEaseType = serializedObject.FindProperty("fillImageEaseType");
             _fillImage = serializedObject.FindProperty("fillImage");
             _fillImageDuration = serializedObject.FindProperty("fillImageDuration");
             _hoverImage = serializedObject.FindProperty("hoverImage");
@@ -80,25 +82,19 @@ namespace Seaeees.GButton.Editor
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-
-            //EditorGUILayout.BeginHorizontal();
-            //_useTemplate = EditorGUILayout.Toggle("UseTemplate", _useTemplate);
-            //EditorGUI.BeginDisabledGroup(!_useTemplate);
-            //EditorGUILayout.PropertyField(_template, new GUIContent(""));
-            //EditorGUI.EndDisabledGroup();
-            //EditorGUILayout.EndHorizontal();
             _useTemplate = false;
             EditorGUI.BeginDisabledGroup(_useTemplate);
-            _tabIndex = GUILayout.Toolbar(_tabIndex, new[] {"Color", "Scale", "Audio", "Sprite", "Others"});
+            _tabIndex = GUILayout.Toolbar(_tabIndex, new[] {"Color", "Scale", "Audio", "Sprite", "FillAmount"});
             switch (_tabIndex)
             {
                 case 0:
+                    EditorGUILayout.PropertyField(_colorEaseType);
+                    EditorGUILayout.PropertyField(_colorSpaceType);
                     EditorGUILayout.PropertyField(_useColorAnimationOnHover);
                     if (_useColorAnimationOnHover.boolValue)
                     {
                         EditorGUI.indentLevel++;
                         EditorGUILayout.BeginVertical(GUI.skin.box);
-                        EditorGUILayout.PropertyField(_colorEaseType);
                         EditorGUILayout.PropertyField(_colorOnHover);
                         EditorGUILayout.PropertyField(_colorDurationOnHover);
                         EditorGUILayout.EndVertical();
@@ -117,12 +113,12 @@ namespace Seaeees.GButton.Editor
                     }
                     break;
                 case 1:
+                    EditorGUILayout.PropertyField(_scaleEaseType);
                     EditorGUILayout.PropertyField(_useScaleAnimationOnHover);
                     if (_useScaleAnimationOnHover.boolValue)
                     {
                         EditorGUI.indentLevel++;
                         EditorGUILayout.BeginVertical(GUI.skin.box);
-                        EditorGUILayout.PropertyField(_scaleEaseType);
                         EditorGUILayout.PropertyField(_scaleOnHover);
                         EditorGUILayout.PropertyField(_scaleDurationOnHover);
                         EditorGUILayout.EndVertical();
@@ -177,13 +173,13 @@ namespace Seaeees.GButton.Editor
                     }
                     break;
                 case 4:
+                    EditorGUILayout.PropertyField(_fillAmountEaseType);
                     EditorGUILayout.PropertyField(
                         _useFillAmountAnimation);
                     if (_useFillAmountAnimation.boolValue)
                     {
                         EditorGUI.indentLevel++;
                         EditorGUILayout.BeginVertical(GUI.skin.box);
-                        EditorGUILayout.PropertyField(_fillImageEaseType);
                         EditorGUILayout.PropertyField(_fillImage);
                         EditorGUILayout.PropertyField(_fillImageDuration);
                         EditorGUILayout.EndVertical();

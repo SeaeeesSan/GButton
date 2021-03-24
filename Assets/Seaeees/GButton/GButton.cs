@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Seaeees.GButton
 {
-    public class GButton : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+    public class GButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     {
         private Coroutine _scaleAnimationCoroutine;
         private Coroutine _colorAnimationCoroutine;
@@ -34,6 +34,7 @@ namespace Seaeees.GButton
         [SerializeField] private Vector2 scaleOnClick = Vector2.zero;
         [SerializeField] private float scaleDurationOnClick;
         [SerializeField] private EaseType colorEaseType = EaseType.Linear;
+        [SerializeField] private ColorSpaceType colorSpaceType = ColorSpaceType.RGB;
         [SerializeField] private Color colorOnHover = Color.gray;
         [SerializeField] private float colorDurationOnHover = 0.3f;
         [SerializeField] private Color colorOnClick = Color.gray;
@@ -104,7 +105,7 @@ namespace Seaeees.GButton
         private void AnimationFillAmount(AnimationType animationType)
         {
             if (!_fillImage) return;
-            if(!useFillAmountAnimation) return;
+            if (!useFillAmountAnimation) return;
             if (animationType == AnimationType.PointerEnter)
                 ResetCoroutine(ref _fillAnimationCoroutine, _fillImage.AnimateFillAmount(1, fillImageDuration, fillImageEaseType));
             else if (animationType == AnimationType.PointerExit)
@@ -128,15 +129,15 @@ namespace Seaeees.GButton
         private void AnimationColor(AnimationType animationType)
         {
             if (animationType == AnimationType.PointerEnter && useColorAnimationOnHover)
-                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(colorOnHover, colorDurationOnHover,colorEaseType));
+                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(colorOnHover, colorDurationOnHover, colorEaseType, colorSpaceType));
             else if (animationType == AnimationType.PointerExit && useColorAnimationOnHover)
-                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(_defaultColor, colorDurationOnHover,colorEaseType));
+                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(_defaultColor, colorDurationOnHover, colorEaseType, colorSpaceType));
             else if (animationType == AnimationType.PointerDown && useColorAnimationOnClick)
-                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(colorOnClick, colorDurationOnClick,colorEaseType));
+                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(colorOnClick, colorDurationOnClick, colorEaseType, colorSpaceType));
             else if (animationType == AnimationType.PointerUp && useColorAnimationOnClick && useColorAnimationOnHover)
-                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(colorOnHover, colorDurationOnClick,colorEaseType));
+                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(colorOnHover, colorDurationOnClick, colorEaseType, colorSpaceType));
             else if (animationType == AnimationType.PointerUp && useColorAnimationOnClick)
-                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(_defaultColor, colorDurationOnClick,colorEaseType));
+                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(_defaultColor, colorDurationOnClick, colorEaseType, colorSpaceType));
         }
 
         private void ImageChange(AnimationType animationType)
