@@ -1,0 +1,16 @@
+{
+    "name": "GButton.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:70925bddb70bf7148a56705be05c22e6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
