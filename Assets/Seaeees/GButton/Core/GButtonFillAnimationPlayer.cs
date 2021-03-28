@@ -9,18 +9,18 @@ namespace Seaeees.GButton.Core
 		private MonoBehaviour monoBehaviour;
 
 		private bool useFillAmountAnimation;
-		private EaseType fillImageEaseType = EaseType.Linear;
 		private Image fillImage;
+		private EaseType fillImageEaseType = EaseType.Linear;
 		private float fillImageDuration = 0.3f;
 
 		private Coroutine _fillAnimationCoroutine;
 
-		public GButtonFillAnimationPlayer(MonoBehaviour monoBehaviour, bool useFillAmountAnimation, EaseType fillImageEaseType, Image fillImage, float fillImageDuration)
+		public GButtonFillAnimationPlayer(MonoBehaviour monoBehaviour, Image fillImage, EaseType fillImageEaseType, bool useFillAmountAnimation, float fillImageDuration)
 		{
 			this.monoBehaviour = monoBehaviour;
-			this.useFillAmountAnimation = useFillAmountAnimation;
-			this.fillImageEaseType = fillImageEaseType;
 			this.fillImage = fillImage;
+			this.fillImageEaseType = fillImageEaseType;
+			this.useFillAmountAnimation = useFillAmountAnimation;
 			this.fillImageDuration = fillImageDuration;
 		}
 

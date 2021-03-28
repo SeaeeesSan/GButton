@@ -73,7 +73,7 @@ namespace Seaeees.GButton
             var colorAnimationPlayer = new GButtonColorAnimationPlayer(this, image, colorEaseType, colorSpaceType, useColorAnimationOnHover, colorOnHover, colorDurationOnHover, useColorAnimationOnClick, colorOnClick, colorDurationOnClick);
             var audioPlayer = new GButtonAudioPlayer(useAudioPlayer, audioSource, hoverEnterAudioClip, hoverExitAudioClip, downAudioClip, upAudioClip);
             var imageChanger = new GButtonImageChanger(image, useImageChangerOnHover, hoverImage, useImageChangerOnClick, clickImage);
-            var fillAnimationPlayer = new GButtonFillAnimationPlayer(this, useFillAmountAnimation, fillImageEaseType, fillImage, fillImageDuration);
+            var fillAnimationPlayer = new GButtonFillAnimationPlayer(this, fillImage, fillImageEaseType, useFillAmountAnimation, fillImageDuration);
 
             _core = new GButtonCore(scaleAnimationPlayer, colorAnimationPlayer, audioPlayer, imageChanger, fillAnimationPlayer);
 
