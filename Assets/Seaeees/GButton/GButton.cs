@@ -9,10 +9,6 @@ namespace Seaeees.GButton
 {
     public class GButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     {
-        private Coroutine _colorAnimationCoroutine;
-        private Image _image;
-        private Color _defaultColor;
-
         private GButtonCore _core;
 
         [SerializeField] private bool useScaleAnimationOnHover;
@@ -48,16 +44,15 @@ namespace Seaeees.GButton
         private void Awake()
         {
             var rectTransform = GetComponent<RectTransform>();
-            _image = GetComponent<Image>();
-
-            _defaultColor = _image.color;
+            var image = GetComponent<Image>();
 
             var audioPlayer = new GButtonAudioPlayer(useAudioPlayer, audioSource, hoverEnterAudioClip, hoverExitAudioClip, downAudioClip, upAudioClip);
             var fillAnimationPlayer = new GButtonFillAnimationPlayer(this, useFillAmountAnimation, fillImageEaseType, fillImage, fillImageDuration);
             var scaleAnimationPlayer = new GButtonScaleAnimationPlayer(this, rectTransform, scaleEaseType, useScaleAnimationOnHover, scaleOnHover, scaleDurationOnHover, useScaleAnimationOnClick, scaleOnClick, scaleDurationOnClick);
-            var imageChanger = new GButtonImageChanger(_image, useImageChangerOnHover, hoverImage, useImageChangerOnClick, clickImage);
+            var colorAnimationPlayer = new GButtonColorAnimationPlayer(this, image, colorEaseType, colorSpaceType, useColorAnimationOnHover, colorOnHover, colorDurationOnHover, useColorAnimationOnClick, colorOnClick, colorDurationOnClick);
+            var imageChanger = new GButtonImageChanger(image, useImageChangerOnHover, hoverImage, useImageChangerOnClick, clickImage);
 
-            _core = new GButtonCore(audioPlayer, fillAnimationPlayer, scaleAnimationPlayer, imageChanger);
+            _core = new GButtonCore(audioPlayer, fillAnimationPlayer, scaleAnimationPlayer, colorAnimationPlayer, imageChanger);
 
             _core.CalculateScale();
         }
@@ -75,28 +70,6 @@ namespace Seaeees.GButton
         private void PlayButtonEffects(AnimationType type)
         {
             _core.PlayButtonEffects(type);
-            AnimationColor(type);
-        }
-
-        private void AnimationColor(AnimationType animationType)
-        {
-            if (animationType == AnimationType.PointerEnter && useColorAnimationOnHover)
-                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(colorOnHover, colorDurationOnHover, colorEaseType, colorSpaceType));
-            else if (animationType == AnimationType.PointerExit && useColorAnimationOnHover)
-                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(_defaultColor, colorDurationOnHover, colorEaseType, colorSpaceType));
-            else if (animationType == AnimationType.PointerDown && useColorAnimationOnClick)
-                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(colorOnClick, colorDurationOnClick, colorEaseType, colorSpaceType));
-            else if (animationType == AnimationType.PointerUp && useColorAnimationOnClick && useColorAnimationOnHover)
-                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(colorOnHover, colorDurationOnClick, colorEaseType, colorSpaceType));
-            else if (animationType == AnimationType.PointerUp && useColorAnimationOnClick)
-                ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(_defaultColor, colorDurationOnClick, colorEaseType, colorSpaceType));
-        }
-
-
-        private void ResetCoroutine(ref Coroutine coroutine, IEnumerator enumerator)
-        {
-            if (coroutine != null) StopCoroutine(coroutine);
-            coroutine = StartCoroutine(enumerator);
         }
     }
 }
