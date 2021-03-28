@@ -57,7 +57,7 @@ namespace Seaeees.GButton
             _core.CalculateScale();
         }
 
-        private void OnValidate() => _core.CalculateScale();
+        private void OnValidate() => _core?.CalculateScale();
 
         public void OnPointerEnter(PointerEventData eventData) => PlayButtonEffects(AnimationType.PointerEnter);
 
