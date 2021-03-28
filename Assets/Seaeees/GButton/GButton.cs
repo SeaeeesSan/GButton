@@ -43,21 +43,13 @@ namespace Seaeees.GButton
 
         private void Awake()
         {
-            var rectTransform = GetComponent<RectTransform>();
-            var image = GetComponent<Image>();
-
-            var audioPlayer = new GButtonAudioPlayer(useAudioPlayer, audioSource, hoverEnterAudioClip, hoverExitAudioClip, downAudioClip, upAudioClip);
-            var fillAnimationPlayer = new GButtonFillAnimationPlayer(this, useFillAmountAnimation, fillImageEaseType, fillImage, fillImageDuration);
-            var scaleAnimationPlayer = new GButtonScaleAnimationPlayer(this, rectTransform, scaleEaseType, useScaleAnimationOnHover, scaleOnHover, scaleDurationOnHover, useScaleAnimationOnClick, scaleOnClick, scaleDurationOnClick);
-            var colorAnimationPlayer = new GButtonColorAnimationPlayer(this, image, colorEaseType, colorSpaceType, useColorAnimationOnHover, colorOnHover, colorDurationOnHover, useColorAnimationOnClick, colorOnClick, colorDurationOnClick);
-            var imageChanger = new GButtonImageChanger(image, useImageChangerOnHover, hoverImage, useImageChangerOnClick, clickImage);
-
-            _core = new GButtonCore(audioPlayer, fillAnimationPlayer, scaleAnimationPlayer, colorAnimationPlayer, imageChanger);
-
-            _core.CalculateScale();
+            InitializeCore();
         }
 
-        private void OnValidate() => _core?.CalculateScale();
+        private void OnValidate()
+        {
+            InitializeCore();
+        }
 
         public void OnPointerEnter(PointerEventData eventData) => PlayButtonEffects(AnimationType.PointerEnter);
 
@@ -70,6 +62,22 @@ namespace Seaeees.GButton
         private void PlayButtonEffects(AnimationType type)
         {
             _core.PlayButtonEffects(type);
+        }
+
+        private void InitializeCore()
+        {
+            var rectTransform = GetComponent<RectTransform>();
+            var image = GetComponent<Image>();
+
+            var audioPlayer = new GButtonAudioPlayer(useAudioPlayer, audioSource, hoverEnterAudioClip, hoverExitAudioClip, downAudioClip, upAudioClip);
+            var fillAnimationPlayer = new GButtonFillAnimationPlayer(this, useFillAmountAnimation, fillImageEaseType, fillImage, fillImageDuration);
+            var scaleAnimationPlayer = new GButtonScaleAnimationPlayer(this, rectTransform, scaleEaseType, useScaleAnimationOnHover, scaleOnHover, scaleDurationOnHover, useScaleAnimationOnClick, scaleOnClick, scaleDurationOnClick);
+            var colorAnimationPlayer = new GButtonColorAnimationPlayer(this, image, colorEaseType, colorSpaceType, useColorAnimationOnHover, colorOnHover, colorDurationOnHover, useColorAnimationOnClick, colorOnClick, colorDurationOnClick);
+            var imageChanger = new GButtonImageChanger(image, useImageChangerOnHover, hoverImage, useImageChangerOnClick, clickImage);
+
+            _core = new GButtonCore(audioPlayer, fillAnimationPlayer, scaleAnimationPlayer, colorAnimationPlayer, imageChanger);
+
+            _core.CalculateScale();
         }
     }
 }
