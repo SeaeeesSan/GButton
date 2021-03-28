@@ -16,7 +16,6 @@ namespace Seaeees.GButton
 
         private GButtonCore _core;
 
-
         [SerializeField] private bool useScaleAnimationOnHover;
         [SerializeField] private bool useScaleAnimationOnClick;
         [SerializeField] private bool useColorAnimationOnHover;
