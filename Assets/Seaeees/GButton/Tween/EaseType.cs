@@ -23,6 +23,10 @@ namespace Seaeees.GButton.Tween
         ExpoIn,
         ExpoOut,
         ExpoInOut,
+        
+        CircIn,
+        CircOut,
+        CircInOut,
     }
 
     public enum ColorSpaceType

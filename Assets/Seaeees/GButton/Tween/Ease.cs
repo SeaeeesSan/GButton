@@ -1,4 +1,5 @@
 using System;
+
 namespace Seaeees.GButton.Tween
 {
     public static class Ease
@@ -39,6 +40,12 @@ namespace Seaeees.GButton.Tween
                     return ExpoOut(a, b, t);
                 case EaseType.ExpoInOut:
                     return ExpoInOut(a, b, t);
+                case EaseType.CircIn:
+                    return CircIn(a, b, t);
+                case EaseType.CircOut:
+                    return CircOut(a, b, t);
+                case EaseType.CircInOut:
+                    return CircInOut(a, b, t);
                 default:
                     return Linear(a, b, t);
             }
@@ -73,6 +80,7 @@ namespace Seaeees.GButton.Tween
             t--;
             return -b/2 * (t*(t-2) - 1) + a;
         }
+        
         private static float CubicIn(float a, float b,float t)
         {
             b -= a;
@@ -166,6 +174,30 @@ namespace Seaeees.GButton.Tween
             if (t < 1) return b/2 * (float)Math.Pow( 2, 10 * (t - 1) ) + a;
             t--;
             return b/2 * (float)(-Math.Pow( 2, -10 * t) + 2 ) + a;
+        }
+
+        private static float CircIn(float a, float b, float t)
+        {
+            b -= a;
+            t /= 1;
+            return -b * (float)(Math.Sqrt(1 - t * t) - 1) + a;
+        }
+
+        private static float CircOut(float a, float b, float t)
+        {
+            b -= a;
+            t /= 1;
+            t--;
+            return b * (float)Math.Sqrt(1 - t * t) + a;
+        }
+
+        private static float CircInOut(float a, float b, float t)
+        {
+            b -= a;
+            t /= 0.5f;
+            if (t < 1) return -b / 2 * (float) (Math.Sqrt(1 - t * t) - 1) + a;
+            t -= 2;
+            return b / 2 * (float)(Math.Sqrt(1 - t * t) + 1) + a;
         }
     }
 }
