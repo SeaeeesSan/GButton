@@ -1,4 +1,5 @@
 using System.Collections;
+using Seaeees.GButton.Core;
 using Seaeees.GButton.Tween;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,17 +9,13 @@ namespace Seaeees.GButton
 {
     public class GButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     {
-        private Coroutine _scaleAnimationCoroutine;
         private Coroutine _colorAnimationCoroutine;
-        private Coroutine _fillAnimationCoroutine;
-        private RectTransform _rectTransform;
         private Image _image;
-        private Image _fillImage;
         private Color _defaultColor;
-        private Vector2 _defaultScale;
         private Sprite _defaultSprite;
-        private Vector2 _calculatedScaleOnHover;
-        private Vector2 _calculatedScaleOnClick;
+
+        private GButtonCore _core;
+
 
         [SerializeField] private bool useScaleAnimationOnHover;
         [SerializeField] private bool useScaleAnimationOnClick;
@@ -52,24 +49,22 @@ namespace Seaeees.GButton
 
         private void Awake()
         {
-            _rectTransform = GetComponent<RectTransform>();
+            var rectTransform = GetComponent<RectTransform>();
             _image = GetComponent<Image>();
 
-            _fillImage = fillImage;
-            _defaultScale = _rectTransform.sizeDelta;
             _defaultColor = _image.color;
             _defaultSprite = _image.sprite;
 
-            CalculateScale();
+            var audioPlayer = new GButtonAudioPlayer(useAudioPlayer, audioSource, hoverEnterAudioClip, hoverExitAudioClip, downAudioClip, upAudioClip);
+            var fillAnimationPlayer = new GButtonFillAnimationPlayer(this, useFillAmountAnimation, fillImageEaseType, fillImage, fillImageDuration);
+            var scaleAnimationPlayer = new GButtonScaleAnimationPlayer(this, rectTransform, scaleEaseType, useScaleAnimationOnHover, scaleOnHover, scaleDurationOnHover, useScaleAnimationOnClick, scaleOnClick, scaleDurationOnClick);
+
+            _core = new GButtonCore(audioPlayer, fillAnimationPlayer, scaleAnimationPlayer);
+
+            _core.CalculateScale();
         }
 
-        private void OnValidate() => CalculateScale();
-
-        private void CalculateScale()
-        {
-            _calculatedScaleOnHover = new Vector2(_defaultScale.x + scaleOnHover.x, _defaultScale.y + scaleOnHover.y);
-            _calculatedScaleOnClick = new Vector2(_defaultScale.x + scaleOnClick.x, _defaultScale.y + scaleOnClick.y);
-        }
+        private void OnValidate() => _core.CalculateScale();
 
         public void OnPointerEnter(PointerEventData eventData) => PlayButtonEffects(AnimationType.PointerEnter);
 
@@ -81,49 +76,9 @@ namespace Seaeees.GButton
 
         private void PlayButtonEffects(AnimationType type)
         {
-            PlayAudio(type);
-            AnimationFillAmount(type);
-            AnimationScale(type);
+            _core.PlayButtonEffects(type);
             AnimationColor(type);
             ImageChange(type);
-        }
-
-        private void PlayAudio(AnimationType animationType)
-        {
-            if (!audioSource) return;
-            if (!useAudioPlayer) return;
-            if (animationType == AnimationType.PointerEnter)
-                audioSource.PlayOneShot(hoverEnterAudioClip);
-            else if (animationType == AnimationType.PointerExit)
-                audioSource.PlayOneShot(hoverExitAudioClip);
-            else if (animationType == AnimationType.PointerDown)
-                audioSource.PlayOneShot(downAudioClip);
-            else if (animationType == AnimationType.PointerUp)
-                audioSource.PlayOneShot(upAudioClip);
-        }
-
-        private void AnimationFillAmount(AnimationType animationType)
-        {
-            if (!_fillImage) return;
-            if (!useFillAmountAnimation) return;
-            if (animationType == AnimationType.PointerEnter)
-                ResetCoroutine(ref _fillAnimationCoroutine, _fillImage.AnimateFillAmount(1, fillImageDuration, fillImageEaseType));
-            else if (animationType == AnimationType.PointerExit)
-                ResetCoroutine(ref _fillAnimationCoroutine, _fillImage.AnimateFillAmount(0, fillImageDuration, fillImageEaseType));
-        }
-
-        private void AnimationScale(AnimationType animationType)
-        {
-            if (animationType == AnimationType.PointerEnter && useScaleAnimationOnHover)
-                ResetCoroutine(ref _scaleAnimationCoroutine, _rectTransform.AnimateScale(_calculatedScaleOnHover, scaleDurationOnHover, scaleEaseType));
-            else if (animationType == AnimationType.PointerExit && useScaleAnimationOnHover)
-                ResetCoroutine(ref _scaleAnimationCoroutine, _rectTransform.AnimateScale(_defaultScale, scaleDurationOnHover, scaleEaseType));
-            else if (animationType == AnimationType.PointerDown && useScaleAnimationOnClick)
-                ResetCoroutine(ref _scaleAnimationCoroutine, _rectTransform.AnimateScale(_calculatedScaleOnClick, scaleDurationOnClick, scaleEaseType));
-            else if (animationType == AnimationType.PointerUp && useScaleAnimationOnClick && useScaleAnimationOnHover)
-                ResetCoroutine(ref _scaleAnimationCoroutine, _rectTransform.AnimateScale(_calculatedScaleOnHover, scaleDurationOnClick, scaleEaseType));
-            else if (animationType == AnimationType.PointerUp && useScaleAnimationOnClick)
-                ResetCoroutine(ref _scaleAnimationCoroutine, _rectTransform.AnimateScale(_defaultScale, scaleDurationOnClick, scaleEaseType));
         }
 
         private void AnimationColor(AnimationType animationType)
