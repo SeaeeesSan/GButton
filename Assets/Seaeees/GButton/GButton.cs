@@ -12,7 +12,6 @@ namespace Seaeees.GButton
         private Coroutine _colorAnimationCoroutine;
         private Image _image;
         private Color _defaultColor;
-        private Sprite _defaultSprite;
 
         private GButtonCore _core;
 
@@ -52,13 +51,13 @@ namespace Seaeees.GButton
             _image = GetComponent<Image>();
 
             _defaultColor = _image.color;
-            _defaultSprite = _image.sprite;
 
             var audioPlayer = new GButtonAudioPlayer(useAudioPlayer, audioSource, hoverEnterAudioClip, hoverExitAudioClip, downAudioClip, upAudioClip);
             var fillAnimationPlayer = new GButtonFillAnimationPlayer(this, useFillAmountAnimation, fillImageEaseType, fillImage, fillImageDuration);
             var scaleAnimationPlayer = new GButtonScaleAnimationPlayer(this, rectTransform, scaleEaseType, useScaleAnimationOnHover, scaleOnHover, scaleDurationOnHover, useScaleAnimationOnClick, scaleOnClick, scaleDurationOnClick);
+            var imageChanger = new GButtonImageChanger(_image, useImageChangerOnHover, hoverImage, useImageChangerOnClick, clickImage);
 
-            _core = new GButtonCore(audioPlayer, fillAnimationPlayer, scaleAnimationPlayer);
+            _core = new GButtonCore(audioPlayer, fillAnimationPlayer, scaleAnimationPlayer, imageChanger);
 
             _core.CalculateScale();
         }
@@ -77,7 +76,6 @@ namespace Seaeees.GButton
         {
             _core.PlayButtonEffects(type);
             AnimationColor(type);
-            ImageChange(type);
         }
 
         private void AnimationColor(AnimationType animationType)
@@ -94,19 +92,6 @@ namespace Seaeees.GButton
                 ResetCoroutine(ref _colorAnimationCoroutine, _image.AnimateColor(_defaultColor, colorDurationOnClick, colorEaseType, colorSpaceType));
         }
 
-        private void ImageChange(AnimationType animationType)
-        {
-            if (animationType == AnimationType.PointerEnter && useImageChangerOnHover)
-                _image.sprite = hoverImage;
-            else if (animationType == AnimationType.PointerExit && useImageChangerOnHover)
-                _image.sprite = _defaultSprite;
-            else if (animationType == AnimationType.PointerDown && useImageChangerOnClick)
-                _image.sprite = clickImage;
-            else if (animationType == AnimationType.PointerUp && useImageChangerOnClick && useImageChangerOnHover)
-                _image.sprite = hoverImage;
-            else if (animationType == AnimationType.PointerUp && useImageChangerOnClick)
-                _image.sprite = _defaultSprite;
-        }
 
         private void ResetCoroutine(ref Coroutine coroutine, IEnumerator enumerator)
         {
