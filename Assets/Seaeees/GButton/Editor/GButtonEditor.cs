@@ -146,7 +146,7 @@ namespace Seaeees.GButton.Editor
             {
                 GUI.enabled = _useScaleAnimationOnClick.boolValue;
                 {
-                    EditorGUILayout.PropertyField(_useScaleAnimationOnClick,new GUIContent("Easing"));
+                    EditorGUILayout.PropertyField(_scaleEaseTypeOnClick,new GUIContent("Easing"));
                     EditorGUILayout.PropertyField(_scaleOnClick,new GUIContent("Scale"));
                     EditorGUILayout.PropertyField(_scaleDurationOnClick,new GUIContent("Duration"));
                 }

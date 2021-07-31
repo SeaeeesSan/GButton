@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public static class CustomEditorUtils
-{
-    private static bool a;
-    static Dictionary<string, GUIContent> s_GUIContentCache;
-    internal static bool Foldout(string title, bool isActive, ref bool group)
+namespace Seaeees.GButton.Editor{
+    public static class CustomEditorUtils
+    {
+        internal static bool Foldout(string title, bool isActive, ref bool group)
         {
             var backgroundRect = GUILayoutUtility.GetRect(1f, 17f);
 
@@ -45,6 +44,5 @@ public static class CustomEditorUtils
 
             return isActive;
         }
-    
-    
+    }
 }

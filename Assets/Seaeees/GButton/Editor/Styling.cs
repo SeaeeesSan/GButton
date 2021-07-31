@@ -1,9 +1,8 @@
-  
 using UnityEditor;
 using UnityEngine;
-    /// <summary>
-    /// Common styles used for Post-processing editor controls.
-    /// </summary>
+
+namespace Seaeees.GButton.Editor
+{
     public static class Styling
     {
         /// <summary>
@@ -17,7 +16,10 @@ using UnityEngine;
         /// <summary>
         /// Color of effect header backgrounds.
         /// </summary>
-        public static Color headerBackground { get { return EditorGUIUtility.isProSkin ? headerBackgroundDark : headerBackgroundLight; } }
+        public static Color headerBackground
+        {
+            get { return EditorGUIUtility.isProSkin ? headerBackgroundDark : headerBackgroundLight; }
+        }
 
 
         static Styling()
@@ -29,5 +31,6 @@ using UnityEngine;
 
         }
     }
+}
 
 
