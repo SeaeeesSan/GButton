@@ -19,13 +19,18 @@ namespace Seaeees.GButton
         [SerializeField] private bool useFillAmountAnimation;
         [SerializeField] private bool useImageChangerOnHover;
         [SerializeField] private bool useImageChangerOnClick;
-        [SerializeField] private EaseType scaleEaseType = EaseType.Linear;
+        
         [SerializeField] private Vector2 scaleOnHover = Vector2.zero;
         [SerializeField] private float scaleDurationOnHover = 0.3f;
+        [SerializeField] private EaseType scaleEaseTypeOnHover = EaseType.Linear;
         [SerializeField] private Vector2 scaleOnClick = Vector2.zero;
         [SerializeField] private float scaleDurationOnClick;
-        [SerializeField] private EaseType colorEaseType = EaseType.Linear;
-        [SerializeField] private ColorSpaceType colorSpaceType = ColorSpaceType.RGB;
+        [SerializeField] private EaseType scaleEaseTypeOnClick = EaseType.Linear;
+        
+        [SerializeField] private EaseType colorEaseTypeOnClick = EaseType.Linear;
+        [SerializeField] private ColorSpaceType colorSpaceTypeOnClick = ColorSpaceType.RGB;
+        [SerializeField] private EaseType colorEaseTypeOnHover = EaseType.Linear;
+        [SerializeField] private ColorSpaceType colorSpaceTypeOnHover = ColorSpaceType.RGB;
         [SerializeField] private Color colorOnHover = Color.gray;
         [SerializeField] private float colorDurationOnHover = 0.3f;
         [SerializeField] private Color colorOnClick = Color.gray;
@@ -69,8 +74,8 @@ namespace Seaeees.GButton
             var rectTransform = GetComponent<RectTransform>();
             var image = GetComponent<Image>();
 
-            var scaleAnimationPlayer = new GButtonScaleAnimationPlayer(this, rectTransform, scaleEaseType, useScaleAnimationOnHover, scaleOnHover, scaleDurationOnHover, useScaleAnimationOnClick, scaleOnClick, scaleDurationOnClick);
-            var colorAnimationPlayer = new GButtonColorAnimationPlayer(this, image, colorEaseType, colorSpaceType, useColorAnimationOnHover, colorOnHover, colorDurationOnHover, useColorAnimationOnClick, colorOnClick, colorDurationOnClick);
+            var scaleAnimationPlayer = new GButtonScaleAnimationPlayer(this, rectTransform, useScaleAnimationOnHover, scaleOnHover, scaleDurationOnHover,scaleEaseTypeOnHover, useScaleAnimationOnClick, scaleOnClick, scaleDurationOnClick,scaleEaseTypeOnClick);
+            var colorAnimationPlayer = new GButtonColorAnimationPlayer(this, image, useColorAnimationOnHover, colorOnHover, colorDurationOnHover, colorEaseTypeOnHover,colorSpaceTypeOnHover, useColorAnimationOnClick, colorOnClick, colorDurationOnClick,colorEaseTypeOnClick,colorSpaceTypeOnClick);
             var audioPlayer = new GButtonAudioPlayer(useAudioPlayer, audioSource, hoverEnterAudioClip, hoverExitAudioClip, downAudioClip, upAudioClip);
             var imageChanger = new GButtonImageChanger(image, useImageChangerOnHover, hoverImage, useImageChangerOnClick, clickImage);
             var fillAnimationPlayer = new GButtonFillAnimationPlayer(this, fillImage, fillImageEaseType, useFillAmountAnimation, fillImageDuration);
