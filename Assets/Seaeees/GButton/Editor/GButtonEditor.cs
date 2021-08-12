@@ -21,18 +21,21 @@ namespace Seaeees.GButton.Editor
         //TODO:テンプレート
         //private SerializedProperty _template;
 
-        private SerializedProperty _scaleEaseType;
         private SerializedProperty _scaleOnHover;
         private SerializedProperty _scaleDurationOnHover;
+        private SerializedProperty _scaleEaseTypeOnHover;
         private SerializedProperty _scaleOnClick;
         private SerializedProperty _scaleDurationOnClick;
+        private SerializedProperty _scaleEaseTypeOnClick;
 
-        private SerializedProperty _colorEaseType;
-        private SerializedProperty _colorSpaceType;
         private SerializedProperty _colorOnHover;
         private SerializedProperty _colorDurationOnHover;
+        private SerializedProperty _colorEaseTypeOnHover;
+        private SerializedProperty _colorSpaceTypeOnHover;
         private SerializedProperty _colorOnClick;
         private SerializedProperty _colorDurationOnClick;
+        private SerializedProperty _colorEaseTypeOnClick;
+        private SerializedProperty _colorSpaceTypeOnClick;
 
         private SerializedProperty _audioSource;
         private SerializedProperty _hoverEnterAudioClip;
@@ -46,6 +49,14 @@ namespace Seaeees.GButton.Editor
         private SerializedProperty _hoverImage;
         private SerializedProperty _clickImage;
 
+        private static bool _foldout1;
+        private static bool _foldout2;
+        private static bool _foldout3;
+        private static bool _foldout4;
+        private static bool _foldout5;
+        private static bool _foldout6;
+        private static bool _foldout7;
+        private static bool _foldout8;
         private void OnEnable()
         {
             _useScaleAnimationOnHover = serializedObject.FindProperty("useScaleAnimationOnHover");
@@ -56,17 +67,23 @@ namespace Seaeees.GButton.Editor
             _useFillAmountAnimation = serializedObject.FindProperty("useFillAmountAnimation");
             _useImageChangerOnHover = serializedObject.FindProperty("useImageChangerOnHover");
             _useImageChangerOnClick = serializedObject.FindProperty("useImageChangerOnClick");
-            _scaleEaseType = serializedObject.FindProperty("scaleEaseType");
+
             _scaleOnHover = serializedObject.FindProperty("scaleOnHover");
             _scaleDurationOnHover = serializedObject.FindProperty("scaleDurationOnHover");
+            _scaleEaseTypeOnHover = serializedObject.FindProperty("scaleEaseTypeOnHover");
             _scaleOnClick = serializedObject.FindProperty("scaleOnClick");
             _scaleDurationOnClick = serializedObject.FindProperty("scaleDurationOnClick");
-            _colorEaseType = serializedObject.FindProperty("colorEaseType");
-            _colorSpaceType = serializedObject.FindProperty("colorSpaceType");
+            _scaleEaseTypeOnClick = serializedObject.FindProperty("scaleEaseTypeOnClick");
+
             _colorOnHover = serializedObject.FindProperty("colorOnHover");
             _colorDurationOnHover = serializedObject.FindProperty("colorDurationOnHover");
+            _colorEaseTypeOnHover = serializedObject.FindProperty("colorEaseTypeOnHover");
+            _colorSpaceTypeOnHover = serializedObject.FindProperty("colorSpaceTypeOnHover");
             _colorOnClick = serializedObject.FindProperty("colorOnClick");
             _colorDurationOnClick = serializedObject.FindProperty("colorDurationOnClick");
+            _colorEaseTypeOnClick = serializedObject.FindProperty("colorEaseTypeOnClick");
+            _colorSpaceTypeOnClick = serializedObject.FindProperty("colorSpaceTypeOnClick");
+
             _audioSource = serializedObject.FindProperty("audioSource");
             _hoverEnterAudioClip = serializedObject.FindProperty("hoverEnterAudioClip");
             _hoverExitAudioClip = serializedObject.FindProperty("hoverExitAudioClip");
@@ -82,112 +99,111 @@ namespace Seaeees.GButton.Editor
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            _useTemplate = false;
-            EditorGUI.BeginDisabledGroup(_useTemplate);
-            _tabIndex = GUILayout.Toolbar(_tabIndex, new[] {"Color", "Scale", "Audio", "Sprite", "FillAmount"});
-            switch (_tabIndex)
+
+            EditorGUILayout.LabelField("Effects", EditorStyles.boldLabel);
+
+            _useColorAnimationOnHover.boolValue = CustomEditorUtils.Foldout("Hover Color", _useColorAnimationOnHover.boolValue, ref _foldout1);
+            if(_foldout1)
             {
-                case 0:
-                    EditorGUILayout.PropertyField(_colorEaseType);
-                    EditorGUILayout.PropertyField(_colorSpaceType);
-                    EditorGUILayout.PropertyField(_useColorAnimationOnHover);
-                    if (_useColorAnimationOnHover.boolValue)
-                    {
-                        EditorGUI.indentLevel++;
-                        EditorGUILayout.BeginVertical(GUI.skin.box);
-                        EditorGUILayout.PropertyField(_colorOnHover);
-                        EditorGUILayout.PropertyField(_colorDurationOnHover);
-                        EditorGUILayout.EndVertical();
-                        EditorGUI.indentLevel--;
-                    }
-                    EditorGUILayout.PropertyField(_useColorAnimationOnClick);
-                    if (_useColorAnimationOnClick.boolValue)
-                    {
-                        EditorGUI.indentLevel++;
-                        EditorGUILayout.Space(4);
-                        EditorGUILayout.BeginVertical(GUI.skin.box);
-                        EditorGUILayout.PropertyField(_colorOnClick);
-                        EditorGUILayout.PropertyField(_colorDurationOnClick);
-                        EditorGUILayout.EndVertical();
-                        EditorGUI.indentLevel--;
-                    }
-                    break;
-                case 1:
-                    EditorGUILayout.PropertyField(_scaleEaseType);
-                    EditorGUILayout.PropertyField(_useScaleAnimationOnHover);
-                    if (_useScaleAnimationOnHover.boolValue)
-                    {
-                        EditorGUI.indentLevel++;
-                        EditorGUILayout.BeginVertical(GUI.skin.box);
-                        EditorGUILayout.PropertyField(_scaleOnHover);
-                        EditorGUILayout.PropertyField(_scaleDurationOnHover);
-                        EditorGUILayout.EndVertical();
-                        EditorGUI.indentLevel--;
-                    }
-                    EditorGUILayout.PropertyField(_useScaleAnimationOnClick);
-                    if (_useScaleAnimationOnClick.boolValue)
-                    {
-                        EditorGUI.indentLevel++;
-                        EditorGUILayout.Space(4);
-                        EditorGUILayout.BeginVertical(GUI.skin.box);
-                        EditorGUILayout.PropertyField(_scaleOnClick);
-                        EditorGUILayout.PropertyField(_scaleDurationOnClick);
-                        EditorGUILayout.EndVertical();
-                        EditorGUI.indentLevel--;
-                    }
-                    break;
-                case 2:
-                    EditorGUILayout.PropertyField(_useAudioPlayer);
-                    if (_useAudioPlayer.boolValue)
-                    {
-                        EditorGUI.indentLevel++;
-                        EditorGUILayout.BeginVertical(GUI.skin.box);
-                        EditorGUILayout.PropertyField(_audioSource);
-                        EditorGUILayout.Space(4);
-                        EditorGUILayout.PropertyField(_hoverEnterAudioClip);
-                        EditorGUILayout.PropertyField(_hoverExitAudioClip);
-                        EditorGUILayout.PropertyField(_downAudioClip);
-                        EditorGUILayout.PropertyField(_upAudioClip);
-                        EditorGUILayout.EndVertical();
-                        EditorGUI.indentLevel--;
-                    }
-                    break;
-                case 3:
-                    EditorGUILayout.PropertyField(_useImageChangerOnHover);
-                    if (_useImageChangerOnHover.boolValue)
-                    {
-                        EditorGUI.indentLevel++;
-                        EditorGUILayout.BeginVertical(GUI.skin.box);
-                        EditorGUILayout.PropertyField(_hoverImage);
-                        EditorGUI.indentLevel--;
-                        EditorGUILayout.EndVertical();
-                    }
-                    EditorGUILayout.PropertyField(_useImageChangerOnClick);
-                    if (_useImageChangerOnClick.boolValue)
-                    {
-                        EditorGUI.indentLevel++;
-                        EditorGUILayout.BeginVertical(GUI.skin.box);
-                        EditorGUILayout.PropertyField(_clickImage);
-                        EditorGUILayout.EndVertical();
-                        EditorGUI.indentLevel--;
-                    }
-                    break;
-                case 4:
-                    EditorGUILayout.PropertyField(_fillAmountEaseType);
-                    EditorGUILayout.PropertyField(
-                        _useFillAmountAnimation);
-                    if (_useFillAmountAnimation.boolValue)
-                    {
-                        EditorGUI.indentLevel++;
-                        EditorGUILayout.BeginVertical(GUI.skin.box);
-                        EditorGUILayout.PropertyField(_fillImage);
-                        EditorGUILayout.PropertyField(_fillImageDuration);
-                        EditorGUILayout.EndVertical();
-                        EditorGUI.indentLevel--;
-                    }
-                    break;
+                GUI.enabled = _useColorAnimationOnHover.boolValue;
+                {
+                    EditorGUILayout.PropertyField(_colorEaseTypeOnHover,new GUIContent("Easing"));
+                    EditorGUILayout.PropertyField(_colorSpaceTypeOnHover,new GUIContent("Color Space"));
+                    EditorGUILayout.PropertyField(_colorOnHover,new GUIContent("Color"));
+                    EditorGUILayout.PropertyField(_colorDurationOnHover,new GUIContent("Duration"));
+
+                }
+                GUI.enabled = true;
             }
-            EditorGUI.EndDisabledGroup();
+
+            _useColorAnimationOnClick.boolValue = CustomEditorUtils.Foldout("Click Color", _useColorAnimationOnClick.boolValue,ref _foldout2);
+            if(_foldout2)
+            {
+                GUI.enabled = _useColorAnimationOnClick.boolValue;
+                {
+                    EditorGUILayout.PropertyField(_colorEaseTypeOnClick,new GUIContent("Easing"));
+                    EditorGUILayout.PropertyField(_colorSpaceTypeOnClick,new GUIContent("Color Space"));
+                    EditorGUILayout.PropertyField(_colorOnClick,new GUIContent("Coloer"));
+                    EditorGUILayout.PropertyField(_colorDurationOnClick,new GUIContent("Duration"));
+                }
+                GUI.enabled = true;
+            }
+
+            _useScaleAnimationOnHover.boolValue = CustomEditorUtils.Foldout("Hover Scale", _useScaleAnimationOnHover.boolValue,ref _foldout3);
+            if(_foldout3)
+            {
+                GUI.enabled = _useScaleAnimationOnHover.boolValue;
+                {
+                    EditorGUILayout.PropertyField(_scaleEaseTypeOnHover,new GUIContent("Easing"));
+                    EditorGUILayout.PropertyField(_scaleOnHover,new GUIContent("Scale"));
+                    EditorGUILayout.PropertyField(_scaleDurationOnHover,new GUIContent("Duration"));
+                }
+                GUI.enabled = true;
+            }
+
+            _useScaleAnimationOnClick.boolValue = CustomEditorUtils.Foldout("Click Scale", _useScaleAnimationOnClick.boolValue,ref _foldout4);
+            if(_foldout4)
+            {
+                GUI.enabled = _useScaleAnimationOnClick.boolValue;
+                {
+                    EditorGUILayout.PropertyField(_scaleEaseTypeOnClick,new GUIContent("Easing"));
+                    EditorGUILayout.PropertyField(_scaleOnClick,new GUIContent("Scale"));
+                    EditorGUILayout.PropertyField(_scaleDurationOnClick,new GUIContent("Duration"));
+                }
+                GUI.enabled = true;
+            }
+
+            _useAudioPlayer.boolValue = CustomEditorUtils.Foldout("Audio", _useAudioPlayer.boolValue,ref _foldout5);
+            if(_foldout5)
+            {
+                GUI.enabled = _useAudioPlayer.boolValue;
+                {
+                    EditorGUILayout.PropertyField(_audioSource,new GUIContent("Audio Source"));
+
+                    GUILayout.Label("Audio Clips");
+                    EditorGUI.indentLevel++;
+                    EditorGUILayout.PropertyField(_hoverEnterAudioClip,new GUIContent("Pointer Enter"));
+                    EditorGUILayout.PropertyField(_hoverExitAudioClip,new GUIContent("Pointer Exit"));
+                    EditorGUILayout.PropertyField(_downAudioClip,new GUIContent("Pointer Down"));
+                    EditorGUILayout.PropertyField(_upAudioClip,new GUIContent("Pointer Up"));
+                    EditorGUI.indentLevel--;
+
+                }
+                GUI.enabled = true;
+            }
+
+            _useImageChangerOnHover.boolValue = CustomEditorUtils.Foldout("Hover Sprite", _useImageChangerOnHover.boolValue,ref _foldout6);
+            if(_foldout6)
+            {
+                GUI.enabled = _useImageChangerOnHover.boolValue;
+                {
+                        EditorGUILayout.PropertyField(_hoverImage,new GUIContent("Sprite"));
+                }
+                GUI.enabled = true;
+            }
+
+            _useImageChangerOnClick.boolValue = CustomEditorUtils.Foldout("Click Sprite", _useImageChangerOnClick.boolValue,ref _foldout7);
+            if (_foldout7)
+            {
+                GUI.enabled = _useImageChangerOnClick.boolValue;
+                {
+
+                    EditorGUILayout.PropertyField(_clickImage,new GUIContent("Sprite"));
+                }
+                GUI.enabled = true;
+            }
+
+            _useFillAmountAnimation.boolValue = CustomEditorUtils.Foldout("FillAmount", _useFillAmountAnimation.boolValue,ref _foldout8);
+            if (_foldout8)
+            {
+                GUI.enabled = _useFillAmountAnimation.boolValue;
+                {
+                    EditorGUILayout.PropertyField(_fillAmountEaseType,new GUIContent("Easing"));
+                    EditorGUILayout.PropertyField(_fillImage,new GUIContent("Sprite"));
+                    EditorGUILayout.PropertyField(_fillImageDuration,new GUIContent("Duration"));
+                }
+                GUI.enabled = true;
+            }
 
             serializedObject.ApplyModifiedProperties();
         }
