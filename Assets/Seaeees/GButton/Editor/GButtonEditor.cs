@@ -20,14 +20,14 @@ namespace Seaeees.GButton.Editor
 
         //TODO:テンプレート
         //private SerializedProperty _template;
-        
+
         private SerializedProperty _scaleOnHover;
         private SerializedProperty _scaleDurationOnHover;
         private SerializedProperty _scaleEaseTypeOnHover;
         private SerializedProperty _scaleOnClick;
         private SerializedProperty _scaleDurationOnClick;
         private SerializedProperty _scaleEaseTypeOnClick;
-        
+
         private SerializedProperty _colorOnHover;
         private SerializedProperty _colorDurationOnHover;
         private SerializedProperty _colorEaseTypeOnHover;
@@ -49,14 +49,14 @@ namespace Seaeees.GButton.Editor
         private SerializedProperty _hoverImage;
         private SerializedProperty _clickImage;
 
-        private static bool foldout1;
-        private static bool foldout2;
-        private static bool foldout3;
-        private static bool foldout4;
-        private static bool foldout5;
-        private static bool foldout6;
-        private static bool foldout7;
-        private static bool foldout8;
+        private static bool _foldout1;
+        private static bool _foldout2;
+        private static bool _foldout3;
+        private static bool _foldout4;
+        private static bool _foldout5;
+        private static bool _foldout6;
+        private static bool _foldout7;
+        private static bool _foldout8;
         private void OnEnable()
         {
             _useScaleAnimationOnHover = serializedObject.FindProperty("useScaleAnimationOnHover");
@@ -67,14 +67,14 @@ namespace Seaeees.GButton.Editor
             _useFillAmountAnimation = serializedObject.FindProperty("useFillAmountAnimation");
             _useImageChangerOnHover = serializedObject.FindProperty("useImageChangerOnHover");
             _useImageChangerOnClick = serializedObject.FindProperty("useImageChangerOnClick");
-            
+
             _scaleOnHover = serializedObject.FindProperty("scaleOnHover");
             _scaleDurationOnHover = serializedObject.FindProperty("scaleDurationOnHover");
             _scaleEaseTypeOnHover = serializedObject.FindProperty("scaleEaseTypeOnHover");
             _scaleOnClick = serializedObject.FindProperty("scaleOnClick");
             _scaleDurationOnClick = serializedObject.FindProperty("scaleDurationOnClick");
             _scaleEaseTypeOnClick = serializedObject.FindProperty("scaleEaseTypeOnClick");
-            
+
             _colorOnHover = serializedObject.FindProperty("colorOnHover");
             _colorDurationOnHover = serializedObject.FindProperty("colorDurationOnHover");
             _colorEaseTypeOnHover = serializedObject.FindProperty("colorEaseTypeOnHover");
@@ -83,7 +83,7 @@ namespace Seaeees.GButton.Editor
             _colorDurationOnClick = serializedObject.FindProperty("colorDurationOnClick");
             _colorEaseTypeOnClick = serializedObject.FindProperty("colorEaseTypeOnClick");
             _colorSpaceTypeOnClick = serializedObject.FindProperty("colorSpaceTypeOnClick");
-            
+
             _audioSource = serializedObject.FindProperty("audioSource");
             _hoverEnterAudioClip = serializedObject.FindProperty("hoverEnterAudioClip");
             _hoverExitAudioClip = serializedObject.FindProperty("hoverExitAudioClip");
@@ -99,25 +99,25 @@ namespace Seaeees.GButton.Editor
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            
+
             EditorGUILayout.LabelField("Effects", EditorStyles.boldLabel);
 
-            _useColorAnimationOnHover.boolValue = CustomEditorUtils.Foldout("Hover Color", _useColorAnimationOnHover.boolValue, ref foldout1);
-            if(foldout1)
+            _useColorAnimationOnHover.boolValue = CustomEditorUtils.Foldout("Hover Color", _useColorAnimationOnHover.boolValue, ref _foldout1);
+            if(_foldout1)
             {
                 GUI.enabled = _useColorAnimationOnHover.boolValue;
                 {
                     EditorGUILayout.PropertyField(_colorEaseTypeOnHover,new GUIContent("Easing"));
                     EditorGUILayout.PropertyField(_colorSpaceTypeOnHover,new GUIContent("Color Space"));
-                    EditorGUILayout.PropertyField(_colorOnHover,new GUIContent("Color")); 
+                    EditorGUILayout.PropertyField(_colorOnHover,new GUIContent("Color"));
                     EditorGUILayout.PropertyField(_colorDurationOnHover,new GUIContent("Duration"));
-                    
+
                 }
                 GUI.enabled = true;
             }
-            
-            _useColorAnimationOnClick.boolValue = CustomEditorUtils.Foldout("Click Color", _useColorAnimationOnClick.boolValue,ref foldout2);
-            if(foldout2)
+
+            _useColorAnimationOnClick.boolValue = CustomEditorUtils.Foldout("Click Color", _useColorAnimationOnClick.boolValue,ref _foldout2);
+            if(_foldout2)
             {
                 GUI.enabled = _useColorAnimationOnClick.boolValue;
                 {
@@ -128,9 +128,9 @@ namespace Seaeees.GButton.Editor
                 }
                 GUI.enabled = true;
             }
-            
-            _useScaleAnimationOnHover.boolValue = CustomEditorUtils.Foldout("Hover Scale", _useScaleAnimationOnHover.boolValue,ref foldout3);
-            if(foldout3)
+
+            _useScaleAnimationOnHover.boolValue = CustomEditorUtils.Foldout("Hover Scale", _useScaleAnimationOnHover.boolValue,ref _foldout3);
+            if(_foldout3)
             {
                 GUI.enabled = _useScaleAnimationOnHover.boolValue;
                 {
@@ -141,8 +141,8 @@ namespace Seaeees.GButton.Editor
                 GUI.enabled = true;
             }
 
-            _useScaleAnimationOnClick.boolValue = CustomEditorUtils.Foldout("Click Scale", _useScaleAnimationOnClick.boolValue,ref foldout4);
-            if(foldout4)
+            _useScaleAnimationOnClick.boolValue = CustomEditorUtils.Foldout("Click Scale", _useScaleAnimationOnClick.boolValue,ref _foldout4);
+            if(_foldout4)
             {
                 GUI.enabled = _useScaleAnimationOnClick.boolValue;
                 {
@@ -152,14 +152,14 @@ namespace Seaeees.GButton.Editor
                 }
                 GUI.enabled = true;
             }
-            
-            _useAudioPlayer.boolValue = CustomEditorUtils.Foldout("Audio", _useAudioPlayer.boolValue,ref foldout5);
-            if(foldout5)
+
+            _useAudioPlayer.boolValue = CustomEditorUtils.Foldout("Audio", _useAudioPlayer.boolValue,ref _foldout5);
+            if(_foldout5)
             {
                 GUI.enabled = _useAudioPlayer.boolValue;
                 {
                     EditorGUILayout.PropertyField(_audioSource,new GUIContent("Audio Source"));
-                    
+
                     GUILayout.Label("Audio Clips");
                     EditorGUI.indentLevel++;
                     EditorGUILayout.PropertyField(_hoverEnterAudioClip,new GUIContent("Pointer Enter"));
@@ -167,13 +167,13 @@ namespace Seaeees.GButton.Editor
                     EditorGUILayout.PropertyField(_downAudioClip,new GUIContent("Pointer Down"));
                     EditorGUILayout.PropertyField(_upAudioClip,new GUIContent("Pointer Up"));
                     EditorGUI.indentLevel--;
-                    
+
                 }
                 GUI.enabled = true;
             }
-            
-            _useImageChangerOnHover.boolValue = CustomEditorUtils.Foldout("Hover Sprite Animation", _useImageChangerOnHover.boolValue,ref foldout6);
-            if(foldout6)
+
+            _useImageChangerOnHover.boolValue = CustomEditorUtils.Foldout("Hover Sprite", _useImageChangerOnHover.boolValue,ref _foldout6);
+            if(_foldout6)
             {
                 GUI.enabled = _useImageChangerOnHover.boolValue;
                 {
@@ -181,9 +181,9 @@ namespace Seaeees.GButton.Editor
                 }
                 GUI.enabled = true;
             }
-        
-            _useImageChangerOnClick.boolValue = CustomEditorUtils.Foldout("Click Sprite Animation", _useImageChangerOnClick.boolValue,ref foldout7);
-            if (foldout7)
+
+            _useImageChangerOnClick.boolValue = CustomEditorUtils.Foldout("Click Sprite", _useImageChangerOnClick.boolValue,ref _foldout7);
+            if (_foldout7)
             {
                 GUI.enabled = _useImageChangerOnClick.boolValue;
                 {
@@ -192,9 +192,9 @@ namespace Seaeees.GButton.Editor
                 }
                 GUI.enabled = true;
             }
-            
-            _useFillAmountAnimation.boolValue = CustomEditorUtils.Foldout("FillAmount", _useFillAmountAnimation.boolValue,ref foldout8);
-            if (foldout8)
+
+            _useFillAmountAnimation.boolValue = CustomEditorUtils.Foldout("FillAmount", _useFillAmountAnimation.boolValue,ref _foldout8);
+            if (_foldout8)
             {
                 GUI.enabled = _useFillAmountAnimation.boolValue;
                 {
@@ -204,7 +204,7 @@ namespace Seaeees.GButton.Editor
                 }
                 GUI.enabled = true;
             }
-            
+
             serializedObject.ApplyModifiedProperties();
         }
     }
